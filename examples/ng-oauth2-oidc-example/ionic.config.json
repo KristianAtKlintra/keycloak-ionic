@@ -1,0 +1,7 @@
+{
+  "name": "ng-oauth2-oidc-example",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
