@@ -18,7 +18,7 @@ export class HomePage {
   private authCodeFlowConfig: AuthConfig = {
     clientId: 'spa',
     issuer: 'http://localhost:8080/realms/master',
-    redirectUri: 'http://localhost:8100',
+    redirectUri: 'oauth-example://home1',
     responseType: 'code',
     scope: 'openid profile email offline_access',
     showDebugInformation: true
