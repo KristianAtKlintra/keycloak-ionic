@@ -9,9 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, WelcomeComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, OAuthModule.forRoot()],
   providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, Deeplinks],
   bootstrap: [AppComponent],

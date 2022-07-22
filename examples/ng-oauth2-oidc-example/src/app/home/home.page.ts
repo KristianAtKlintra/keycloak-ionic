@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthConfig, OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,7 @@ import { AuthConfig, OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage {
+export class HomePage implements OnInit {
 
   public authenticated = false;
   public oauthServiceInitialized = false;
@@ -18,13 +19,21 @@ export class HomePage {
   private authCodeFlowConfig: AuthConfig = {
     clientId: 'spa',
     issuer: 'http://localhost:8080/realms/master',
-    redirectUri: 'oauth-example://home1',
+    redirectUri: 'oauth-example://home',
     responseType: 'code',
     scope: 'openid profile email offline_access',
     showDebugInformation: true
   };
 
-  constructor(private oauthService: OAuthService) {
+  constructor(private oauthService: OAuthService, private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.queryParamMap.subscribe(value => {
+      if (value.has('code')) {
+        this.oauthService.tryLoginCodeFlow();
+      }
+    });
+  }
+
+  ngOnInit(): void {
     this.initOAuthServiceEvents();
     this.initOAuthService();
   }
@@ -58,6 +67,7 @@ export class HomePage {
     this.oauthService.loadDiscoveryDocumentAndTryLogin()
       .then(value => {
         this.oauthServiceInitialized = value;
+        console.log('try login');
       })
       .catch(reason => console.error('Loading DiscoveryDocument/Login failed', reason))
       .then(() => {

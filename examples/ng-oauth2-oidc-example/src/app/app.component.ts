@@ -1,7 +1,8 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, NgZone } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
-import { HomePage } from './home/home.page';
+import { Router } from '@angular/router';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-root',
@@ -9,24 +10,22 @@ import { HomePage } from './home/home.page';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements AfterViewInit {
-  constructor(private platform: Platform, private deepLinks: Deeplinks) {
+  constructor(private platform: Platform, private router: Router, private zone: NgZone, private oauthService: OAuthService) {
     this.platform.ready().then(() => {
-      console.warn('Test');
-      this.deepLinks.route({
-        '/home': HomePage
-      }).subscribe((match) => {
-          // match.$route - the route we matched, which is the matched entry from the arguments to route()
-          // match.$args - the args passed in the link
-          // match.$link - the full link data
-          console.log('Successfully matched route', match);
-        },
-        (nomatch) => {
-          // nomatch.$link - the full link data
-          console.error('Got a deeplink that didn\'t match', nomatch);
-        });
+      App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+        this.zone.run(() => {
 
-      this.platform.resume.subscribe(value => {
-        console.log('1111111111', window.location);
+          console.log('UrlOpen Event', event);
+
+          const slug = event.url.split('://').pop();
+
+          if (slug) {
+
+            this.router.navigateByUrl(this.router.parseUrl(slug));
+
+          }
+
+        });
       });
     });
 
