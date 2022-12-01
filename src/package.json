@@ -1,30 +1,14 @@
 {
   "name": "keycloak-ionic",
-  "version": "13.0.0",
-  "description": "Keycloak adapter for Ionicframework with Capacitor support.",
+  "version": "19.0.0",
+  "description": "Keycloak Adapter",
   "main": "keycloak.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JohannesBauer97/keycloak-ionic.git"
-  },
-  "keywords": [
-    "capacitor",
-    "adapter",
-    "auth",
-    "authentication",
-    "oauth2",
-    "openid",
-    "keycloak"
-  ],
+  "types": "keycloak.d.ts",
   "dependencies": {
-    "base64-js": "1.3.0",
-    "js-sha256": "0.9.0",
+    "base64-js": "^1.5.1",
+    "js-sha256": "^0.9.0",
     "promise-polyfill": "8.1.3"
   },
-  "author": "Johannes Bauer",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/JohannesBauer97/keycloak-ionic/issues"
-  },
-  "homepage": "https://github.com/JohannesBauer97/keycloak-ionic#readme"
+  "author": "Kristian Jensen",
+  "license": "Apache-2.0"
 }
